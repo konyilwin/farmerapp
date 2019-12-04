@@ -48,6 +48,10 @@ class Product extends Model implements HasMedia
         return $this->belongsToMany(ProductTag::class);
     }
 
+    public function location_tags(){
+        return $this->belongsToMany(ProductLocationTag::class);
+    }
+
     public function getPhotoAttribute()
     {
         $file = $this->getMedia('photo')->last();
