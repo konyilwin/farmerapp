@@ -81,6 +81,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('product_location_tag_access')
+                            <li class="nav-item">
+                                <a href="{{ route("admin.product-location-tags.index") }}" class="nav-link {{ request()->is('admin/product-location-tags') || request()->is('admin/product-location-tags/*') ? 'active' : '' }}">
+                                    <i class="fa-fw fas fa-folder nav-icon">
+
+                                    </i>
+                                    {{ trans('cruds.productLocationTag.title') }}
+                                </a>
+                            </li>
+                        @endcan
                         @can('product_access')
                             <li class="nav-item">
                                 <a href="{{ route("admin.products.index") }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">

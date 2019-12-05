@@ -41,6 +41,9 @@
                             {{ trans('cruds.product.fields.tag') }}
                         </th>
                         <th>
+                            {{ trans('cruds.product.fields.location_tag') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.product.fields.photo') }}
                         </th>
                         <th>
@@ -73,6 +76,11 @@
                             </td>
                             <td>
                                 @foreach($product->tags as $key => $item)
+                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($product->location_tags as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
                             </td>

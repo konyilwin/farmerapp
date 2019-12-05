@@ -27,6 +27,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('product-tags/destroy', 'ProductTagController@massDestroy')->name('product-tags.massDestroy');
     Route::resource('product-tags', 'ProductTagController');
 
+    // ProductLocationtags
+    Route::delete('product-location-tags/destroy', 'ProductLocationTagController@massDestroy')->name('product-location-tags.massDestroy');
+    Route::resource('product-location-tags', 'ProductLocationTagController');
+
     // Products
     Route::delete('products/destroy', 'ProductController@massDestroy')->name('products.massDestroy');
     Route::post('products/media', 'ProductController@storeMedia')->name('products.storeMedia');

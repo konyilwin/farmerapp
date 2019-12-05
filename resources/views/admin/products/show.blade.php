@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <th>
-                            Categories
+                            {{ trans('cruds.product.fields.category') }}
                         </th>
                         <td>
                             @foreach($product->categories as $id => $category)
@@ -54,10 +54,20 @@
                     </tr>
                     <tr>
                         <th>
-                            Tags
+                            {{ trans('cruds.product.fields.tag') }}
                         </th>
                         <td>
                             @foreach($product->tags as $id => $tag)
+                                <span class="label label-info label-many">{{ $tag->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.location_tag') }}
+                        </th>
+                        <td>
+                            @foreach($product->location_tags as $id => $tag)
                                 <span class="label label-info label-many">{{ $tag->name }}</span>
                             @endforeach
                         </td>
