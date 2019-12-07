@@ -31,6 +31,8 @@ class Product extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'description',
+        'user_id',
+        'quantity'
     ];
 
     public function registerMediaConversions(Media $media = null)
@@ -62,5 +64,9 @@ class Product extends Model implements HasMedia
         }
 
         return $file;
+    }
+    
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

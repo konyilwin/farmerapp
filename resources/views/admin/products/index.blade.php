@@ -35,6 +35,9 @@
                             {{ trans('cruds.product.fields.price') }}
                         </th>
                         <th>
+                            {{ trans('cruds.product.fields.quantity') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.product.fields.category') }}
                         </th>
                         <th>
@@ -42,6 +45,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.location_tag') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.product.fields.added_by') }}
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.photo') }}
@@ -70,6 +76,9 @@
                                 {{ $product->price ?? '' }}
                             </td>
                             <td>
+                                {{ $product->quantity ?? '' }}
+                            </td>
+                            <td>
                                 @foreach($product->categories as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
@@ -83,6 +92,9 @@
                                 @foreach($product->location_tags as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $product->user ? $product->user->name : "" }}
                             </td>
                             <td>
                                 @if($product->photo)

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MassDestroyProductTagRequest;
-use App\Http\Requests\StoreProductTagRequest;
-use App\Http\Requests\UpdateProductTagRequest;
+use App\Http\Requests\StoreProductLocationTagRequest;
+use App\Http\Requests\UpdateProductLocationTagRequest;
+use App\Http\Requests\MassDestroyProductLocationTagRequest;
 use App\ProductTag;
 use Gate;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class ProductLocationTagController extends Controller
         return view('admin.productTags.create');
     }
 
-    public function store(StoreProductTagRequest $request)
+    public function store(StoreProductLocationTagRequest $request)
     {
         $productTag = ProductTag::create($request->all());
 
@@ -43,7 +43,7 @@ class ProductLocationTagController extends Controller
         return view('admin.productTags.edit', compact('productTag'));
     }
 
-    public function update(UpdateProductTagRequest $request, ProductTag $productTag)
+    public function update(UpdateProductLocationTagRequest $request, ProductTag $productTag)
     {
         $productTag->update($request->all());
 
@@ -66,7 +66,7 @@ class ProductLocationTagController extends Controller
         return back();
     }
 
-    public function massDestroy(MassDestroyProductTagRequest $request)
+    public function massDestroy(MassDestroyProductLocationTagRequest $request)
     {
         ProductTag::whereIn('id', request('ids'))->delete();
 

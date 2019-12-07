@@ -45,6 +45,18 @@
                     {{ trans('cruds.product.fields.price_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('quantity') ? 'has-error' : '' }}">
+                <label for="quantity">{{ trans('cruds.product.fields.quantity') }}*</label>
+                <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', isset($product) ? $product->quantity : '') }}" step="0.01" required>
+                @if($errors->has('quantity'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('quantity') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.product.fields.quantity_helper') }}
+                </p>
+            </div>
             <div class="form-group {{ $errors->has('categories') ? 'has-error' : '' }}">
                 <label for="category">{{ trans('cruds.product.fields.category') }}
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>

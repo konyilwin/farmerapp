@@ -44,6 +44,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.product.fields.quantity') }}
+                        </th>
+                        <td>
+                            {{ $product->quantity }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.product.fields.category') }}
                         </th>
                         <td>
@@ -70,6 +78,14 @@
                             @foreach($product->location_tags as $id => $tag)
                                 <span class="label label-info label-many">{{ $tag->name }}</span>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.product.fields.added_by') }}
+                        </th>
+                        <td>
+                            {{ $product->user ? $product->user->name : "" }}
                         </td>
                     </tr>
                     <tr>
