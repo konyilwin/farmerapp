@@ -1,5 +1,6 @@
 <?php
 
+use App\Division;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +13,12 @@ class DatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
+            DivisionsTableSeeder::class,
+            CitiesTableSeeder::class,
+            TownshipsTableSeeder::class,
+            ProductCategoriesTableSeeder::class,
+            ProductTagsTableSeeder::class,
+            ProductsTableSeeder::class,
         ]);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductLocationTags extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateProductLocationTags extends Migration
      */
     public function up()
     {
-        Schema::create('product_location_tags', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("name");
+            $table->string("platform")->nullable();
+            $table->string("ip")->nullable();
+            $table->string("device_id")->nullable();
+            $table->text("location")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateProductLocationTags extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_location_tags');
+        Schema::dropIfExists('clients');
     }
 }
