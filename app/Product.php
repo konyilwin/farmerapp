@@ -32,7 +32,9 @@ class Product extends Model implements HasMedia
         'deleted_at',
         'description',
         'user_id',
-        'quantity'
+        'division_ids',
+        'city_ids',
+        'township_ids'
     ];
 
     public function registerMediaConversions(Media $media = null)
@@ -48,10 +50,6 @@ class Product extends Model implements HasMedia
     public function tags()
     {
         return $this->belongsToMany(ProductTag::class);
-    }
-
-    public function location_tags(){
-        return $this->belongsToMany(ProductLocationTag::class);
     }
 
     public function getPhotoAttribute()

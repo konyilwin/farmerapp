@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\City;
+use App\Division;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyProductRequest;
@@ -9,8 +11,8 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Product;
 use App\ProductCategory;
-use App\ProductLocationTag;
 use App\ProductTag;
+use App\Township;
 use App\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -25,7 +27,7 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $products = Product::all();
-
+        // return $products;
         return view('admin.products.index', compact('products'));
     }
 
@@ -37,9 +39,11 @@ class ProductController extends Controller
 
         $tags = ProductTag::all()->pluck('name', 'id');
 
-        $location_tags = ProductLocationTag::all()->pluck('name','id');
+        $divisions = Division::all()->pluck('name','id');
+        $cities = City::all()->pluck('name','id');
+        $townships = Township::all()->pluck('name','id');
 
-        return view('admin.products.create', compact('categories', 'tags', 'location_tags'));
+        return view('admin.products.create', compact('categories', 'tags', 'divisions', 'cities', 'townships'));
     }
 
     public function store(StoreProductRequest $request)
@@ -47,9 +51,12 @@ class ProductController extends Controller
         $data = $request->all();
         $data["user_id"] = auth()->user()->id;
         $product = Product::create($data);
+
+        $data = $request->all();
+        $data["user_id"] = auth()->user()->id;
+        $product = Product::create($data);
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
-        $product->location_tags()->sync($request->input('location_tags', []));
 
         if ($request->input('photo', false)) {
             $product->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
@@ -66,11 +73,9 @@ class ProductController extends Controller
 
         $tags = ProductTag::all()->pluck('name', 'id');
 
-        $location_tags = ProductLocationTag::all()->pluck('name','id');
+        $product->load('categories', 'tags');
 
-        $product->load('categories', 'tags', 'location_tags');
-
-        return view('admin.products.edit', compact('categories', 'tags', 'location_tags', 'product'));
+        return view('admin.products.edit', compact('categories', 'tags', 'product'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -80,7 +85,6 @@ class ProductController extends Controller
         $product->update($data);
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
-        $product->location_tags()->sync($request->input('location_tags', []));
 
         if ($request->input('photo', false)) {
             if (!$product->photo || $request->input('photo') !== $product->photo->file_name) {
@@ -97,7 +101,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'tags', 'location_tags');
+        $product->load('categories', 'tags');
 
         return view('admin.products.show', compact('product'));
     }

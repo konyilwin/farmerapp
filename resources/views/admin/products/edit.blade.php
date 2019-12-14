@@ -46,18 +46,6 @@
                     {{ trans('cruds.product.fields.price_helper') }}
                 </p>
             </div>
-            <div class="form-group {{ $errors->has('quantity') ? 'has-error' : '' }}">
-                <label for="quantity">{{ trans('cruds.product.fields.quantity') }}*</label>
-                <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity', isset($product) ? $product->quantity : '') }}" step="0.01" required>
-                @if($errors->has('quantity'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('quantity') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.product.fields.quantity_helper') }}
-                </p>
-            </div>
             <div class="form-group {{ $errors->has('categories') ? 'has-error' : '' }}">
                 <label for="category">{{ trans('cruds.product.fields.category') }}
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
@@ -88,24 +76,6 @@
                 @if($errors->has('tags'))
                     <em class="invalid-feedback">
                         {{ $errors->first('tags') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.product.fields.tag_helper') }}
-                </p>
-            </div>
-            <div class="form-group {{ $errors->has('location_tags') ? 'has-error' : '' }}">
-                <label for="tag">{{ trans('cruds.product.fields.location_tag') }}
-                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
-                <select name="location_tags[]" id="location_tags" class="form-control select2" multiple="multiple">
-                    @foreach($location_tags as $id => $tag)
-                        <option value="{{ $id }}" {{ (in_array($id, old('location_tags', [])) || isset($product) && $product->location_tags->contains($id)) ? 'selected' : '' }}>{{ $tag }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('location_tags'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('location_tags') }}
                     </em>
                 @endif
                 <p class="helper-block">
