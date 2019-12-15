@@ -27,7 +27,6 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $products = Product::all();
-        // return $products;
         return view('admin.products.index', compact('products'));
     }
 
@@ -57,6 +56,9 @@ class ProductController extends Controller
         $product = Product::create($data);
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
+        $product->setDivisions($request->input('divisions', []));
+        $product->setCities($request->input('cities', []));
+        $product->setTownships($request->input('townships', []));
 
         if ($request->input('photo', false)) {
             $product->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
@@ -74,8 +76,11 @@ class ProductController extends Controller
         $tags = ProductTag::all()->pluck('name', 'id');
 
         $product->load('categories', 'tags');
+        $divisions = Division::all()->pluck('name','id');
+        $cities = City::all()->pluck('name','id');
+        $townships = Township::all()->pluck('name','id');
 
-        return view('admin.products.edit', compact('categories', 'tags', 'product'));
+        return view('admin.products.edit', compact('categories', 'tags', 'product', 'divisions', 'cities', 'townships'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -85,6 +90,9 @@ class ProductController extends Controller
         $product->update($data);
         $product->categories()->sync($request->input('categories', []));
         $product->tags()->sync($request->input('tags', []));
+        $product->setDivisions($request->input('divisions', []));
+        $product->setCities($request->input('cities', []));
+        $product->setTownships($request->input('townships', []));
 
         if ($request->input('photo', false)) {
             if (!$product->photo || $request->input('photo') !== $product->photo->file_name) {

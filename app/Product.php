@@ -16,6 +16,9 @@ class Product extends Model implements HasMedia
 
     protected $appends = [
         'photo',
+        'divisions',
+        'cities',
+        'townships'
     ];
 
     protected $dates = [
@@ -32,9 +35,9 @@ class Product extends Model implements HasMedia
         'deleted_at',
         'description',
         'user_id',
-        'division_ids',
-        'city_ids',
-        'township_ids'
+        // 'division_ids',
+        // 'city_ids',
+        // 'township_ids'
     ];
 
     public function registerMediaConversions(Media $media = null)
@@ -66,5 +69,53 @@ class Product extends Model implements HasMedia
     
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function divisions(){
+        $ids = $this->division_ids;
+        $ids = $ids ? explode(",",$ids) : [];
+        return Division::whereIn("id",$ids)->get();
+    }
+
+    public function getDivisionsAttribute(){
+        return $this->divisions();
+    }
+
+    public function cities(){
+        $ids = $this->city_ids;
+        $ids = $ids ? explode(",",$ids) : [];
+        return City::whereIn("id",$ids)->get();
+    }
+
+    public function getCitiesAttribute(){
+        return $this->cities();
+    }
+
+    public function townships(){
+        $ids = $this->township_ids;
+        $ids = $ids ? explode(",",$ids) : [];
+        return Township::whereIn("id",$ids)->get();
+    }
+
+    public function getTownshipsAttribute(){
+        return $this->townships();
+    }
+
+    public function setDivisions($ids){
+        $ids = $ids ? implode(",",$ids) : null;
+        $this->division_ids = $ids;
+        $this->save();
+    }
+
+    public function setCities($ids){
+        $ids = $ids ? implode(",",$ids) : null;
+        $this->city_ids = $ids;
+        $this->save();
+    }
+
+    public function setTownships($ids){
+        $ids = $ids ? implode(",",$ids) : null;
+        $this->township_ids = $ids;
+        $this->save();
     }
 }

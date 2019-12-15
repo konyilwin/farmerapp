@@ -55,9 +55,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
 });
 
-Route::post("startup", "Client\ClientController@startUp")->name("client.startup");
 Route::post("get-location-data", "Client\ClientController@getLoactionData")->name("client.get_location_data");
 Route::post("store-info", "Client\ClientController@storeInfo")->name("client.store_info");
+Route::post("product/search", "Client\ProductController@search")->name("client.product.search");
 
 Route::group(["prefix" => "test"], function(){
     Route::get("/", "Test\TestConroller@index");

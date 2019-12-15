@@ -82,6 +82,60 @@
                     {{ trans('cruds.product.fields.tag_helper') }}
                 </p>
             </div>
+            <div class="form-group {{ $errors->has('divisions') ? 'has-error' : '' }}">
+                <label for="division">{{ trans('cruds.product.fields.division') }}
+                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                <select name="divisions[]" id="divisions" class="form-control select2" multiple="multiple">
+                    @foreach($divisions as $id => $division)
+                        <option value="{{ $id }}" {{ (in_array($id, old('divisions', [])) || isset($product) && $product->divisions->contains($id)) ? 'selected' : '' }}>{{ $division }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('divisions'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('divisions') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.product.fields.division_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('cities') ? 'has-error' : '' }}">
+                <label for="city">{{ trans('cruds.product.fields.city') }}
+                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                <select name="cities[]" id="cities" class="form-control select2" multiple="multiple">
+                    @foreach($cities as $id => $city)
+                        <option value="{{ $id }}" {{ (in_array($id, old('cities', [])) || isset($product) && $product->cities->contains($id)) ? 'selected' : '' }}>{{ $city }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('cities'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('cities') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.product.fields.city_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('townships') ? 'has-error' : '' }}">
+                <label for="township">{{ trans('cruds.product.fields.township') }}
+                    <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all">{{ trans('global.deselect_all') }}</span></label>
+                <select name="townships[]" id="townships" class="form-control select2" multiple="multiple">
+                    @foreach($townships as $id => $township)
+                        <option value="{{ $id }}" {{ (in_array($id, old('townships', [])) || isset($product) && $product->townships->contains($id)) ? 'selected' : '' }}>{{ $township }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('townships'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('townships') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.product.fields.township_helper') }}
+                </p>
+            </div>
             <div class="form-group {{ $errors->has('photo') ? 'has-error' : '' }}">
                 <label for="photo">{{ trans('cruds.product.fields.photo') }}</label>
                 <div class="needsclick dropzone" id="photo-dropzone">

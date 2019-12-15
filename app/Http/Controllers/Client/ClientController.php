@@ -37,6 +37,7 @@ class ClientController extends Controller
             $client->update($data);
         }else{
             Client::create($data);
-        }        
+        }
+        return response()->json(["data" => []]); 
     }
 }

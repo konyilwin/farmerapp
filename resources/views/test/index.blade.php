@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Test Phone</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        table th, table td{
+            border-collapse: collapse;
+            border:1px solid black;
+        }
+    </style>
 </head>
 <body>
 
@@ -58,6 +68,86 @@
                     <button type="button" @click="sendInfo">Send Info</button>
                 </div>
             </form>
+
+            <br><br>
+
+            <form action="">
+                <div>
+                    <label>
+                        Type :
+                        <select v-model="search.type">
+                            <option value="1">By Name</option>
+                            <option value="2">By Location</option>
+                            <option value="3">By Current Location</option>
+                        </select>
+                    </label>
+                </div>
+                <div v-if="search.type == 1">
+                    <div>
+                        <label>
+                            Product Name :
+                            <input v-model="search.name">
+                        </label>
+                    </div>
+                </div>
+                <div v-if="search.type == 2">
+                    <div>
+                        <label>
+                            Location :
+                            <select v-model="search.division">
+                                <template v-if="search_crit.divisions">
+                                    <option v-for="division in search_crit.divisions" :value="division.id" @click="getSearchCities(division.id)">@{{division.name}}</option>
+                                </template>
+                            </select>
+                            <select v-model="search.city">
+                                <template v-if="search_crit.cities">
+                                    <option v-for="city in search_crit.cities" :value="city.id" @click="getSearchTownship(city.id)">@{{city.name}}</option>
+                                </template>
+                            </select>
+                            <select v-model="search.township">
+                                <template v-if="search_crit.townships">
+                                    <option v-for="township in search_crit.townships" :value="township.id">@{{township.name}}</option>
+                                </template>
+                            </select>
+                        </label>
+                    </div>
+                </div> 
+                <div>
+                    <button type="button" @click="searchProduct">Search</button>
+                </div>               
+            </form>       
+            <div class="">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Categories</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="search.result" v-for="result in search.result">
+                            <td>@{{result.id}}</td>
+                            <td>@{{result.name}}</td>
+                            <td>@{{result.description}}</td>
+                            <td>@{{result.price}}</td>
+                            <td>
+                                <template v-if="result.categories" v-for="category in result.categories">
+                                    <template>@{{category.name}}<br></template>
+                                </template>
+                            </td>
+                            <td>
+                                <template v-if="result.tags" v-for="tag in result.tags">
+                                    <template>@{{tag.name}}<br></template>
+                                </template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>     
         </div>
     </div>
     
@@ -82,9 +172,24 @@
                         township: ""
                     }
                 },
+                search: {
+                    type: 1,
+                    name: null,
+                    division: null,
+                    city: null,
+                    township: null,
+                    result: [],
+                    device: {}
+                },
+                search_crit: {
+                    divisions: [],
+                    cities: [],
+                    townships: [],  
+                },
                 routes: {
                     get_location_data : "{{route('client.get_location_data')}}",
                     store_info : "{{route('client.store_info')}}",
+                    search : "{{route('client.product.search')}}",
                 }
             },
             mounted: function(){
@@ -94,7 +199,8 @@
                 startup(){
                     this.sendInfo();
                     this.$http.post(this.routes.get_location_data,{type: "division"}).then(res => {
-                        this.divisions =  res.data.data;
+                        this.divisions = res.data.data;
+                        this.search_crit.divisions = res.data.data;
                     });
                 },
                 genRandom(){
@@ -116,8 +222,28 @@
                 },
                 sendInfo(){
                     this.$http.post(this.routes.store_info,this.device).then(res => {
+                        this.search.device = this.device;
                     })
-                }
+                },
+                searchProduct(){
+                    this.$http.post(this.routes.search,this.search).then(res => {
+                        this.search.result = res.data.data;
+                    })
+                },
+                getSearchCities(id){
+                    this.search.city = null;
+                    this.search.township = null;
+                    this.search_crit.townships = [];
+                    this.$http.post(this.routes.get_location_data,{type: "city", id: id}).then(res => {
+                        this.search_crit.cities =  res.data.data;
+                    });
+                },
+                getSearchTownship(id){
+                    this.search.township = null;
+                    this.$http.post(this.routes.get_location_data,{type: "township", id: id}).then(res => {
+                        this.search_crit.townships =  res.data.data;
+                    });
+                },
             }
         });
     </script>
