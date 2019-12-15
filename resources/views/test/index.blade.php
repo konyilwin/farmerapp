@@ -189,7 +189,7 @@
                 routes: {
                     get_location_data : "{{route('client.get_location_data')}}",
                     store_info : "{{route('client.store_info')}}",
-                    search : "{{route('client.product.search')}}",
+                    search : "{{route('api.product.search')}}",
                 }
             },
             mounted: function(){
