@@ -104,6 +104,42 @@
                     </ul>
                 </li>
             @endcan
+            @can('product_management_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle" href="#">
+                        <i class="fa-fw fas fa-shopping-cart nav-icon">
+
+                        </i>
+                        {{ trans('cruds.locationManagement.title') }}
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="{{ route("admin.divisions.index") }}" class="nav-link {{ request()->is('admin/divisions') || request()->is('admin/divisions/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-folder nav-icon">
+
+                                </i>
+                                {{ trans('cruds.divisions.title') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.cities.index") }}" class="nav-link {{ request()->is('admin/cities') || request()->is('admin/cities/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-folder nav-icon">
+
+                                </i>
+                                {{ trans('cruds.cities.title') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.townships.index") }}" class="nav-link {{ request()->is('admin/townships') || request()->is('admin/townships/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-folder nav-icon">
+
+                                </i>
+                                {{ trans('cruds.townships.title') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
             @can('faq_management_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle" href="#">

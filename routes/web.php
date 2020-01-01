@@ -53,6 +53,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('messenger/{topic}', 'MessengerController@destroyTopic')->name('messenger.destroyTopic');
     Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
+
+    Route::delete('locations/divisions/destroy', 'DivisionController@massDestroy')->name('divisions.massDestroy');
+    Route::resource('locations/divisions', 'DivisionController');
+    Route::delete('locations/cities/destroy', 'CityController@massDestroy')->name('cities.massDestroy');
+    Route::resource('locations/cities', 'CityController');
+    Route::delete('locations/townships/destroy', 'TownshipController@massDestroy')->name('townships.massDestroy');
+    Route::resource('locations/townships', 'TownshipController');
 });
 
 Route::post("get-location-data", "Client\ClientController@getLoactionData")->name("client.get_location_data");
