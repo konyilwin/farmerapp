@@ -29,15 +29,15 @@ class ClientController extends Controller
 
     public function storeInfo(Request $request){
         $data = $request->all();
-        $data["device_id"] = $request->id;
+        $data["device_id"] = $request->device_id;
         $data["ip"] = request()->ip();
         $data["location"] = json_encode($request->location);
-        $client = Client::where("device_id",$request->id)->first();
+        $client = Client::where("device_id",$request->device_id)->first();
         if($client){
             $client->update($data);
         }else{
-            Client::create($data);
+            $client = Client::create($data);
         }
-        return response()->json(["data" => []]); 
+        return response()->json(["data" => $client]);
     }
 }

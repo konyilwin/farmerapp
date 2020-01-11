@@ -15,8 +15,10 @@ class CreateSearchLogsTable extends Migration
     {
         Schema::create('search_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text("keyword")->nullable();
-            $table->text("location")->nullable();
+            $table->integer('division_id')->nullable();
+            $table->integer('city_id')->nullable();
+            $table->integer('township_id')->nullable();
+            $table->string("keyword")->nullable();
             $table->integer("client_id")->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -28,4 +28,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::apiResource('faq-questions', 'FaqQuestionApiController');
 
     Route::post("products/search", "ProductApiController@search")->name("product.search");
+    Route::get("products/get/{id}", "ProductApiController@getProduct");
 });
