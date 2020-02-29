@@ -18,4 +18,8 @@ class Division extends Model
     public function townships(){
         return $this->hasMany(Township::class);
     }
+
+    public function search_logs(){
+        return $this->hasMany(SearchLog::class,"division_id");
+    }
 }

@@ -30,3 +30,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin'], 
     Route::post("products/search", "ProductApiController@search")->name("product.search");
     Route::get("products/get/{id}", "ProductApiController@getProduct");
 });
+
+Route::group(["prefix" => "v2", 'as' => 'api', 'namespace' => 'Api\V2'], function (){
+    Route::post("check-user-exists", "UserController@checkUserExits");
+    Route::post("store-user-info", "UserController@storeInfo");
+    Route::post("get-locations", "LocationController@getLocations");
+    Route::post("get-products", "ProductController@getProducts");
+    Route::post("get-product-detail", "ProductController@getProductDetail");
+    Route::post("get-products-from-search-log", "ProductController@getProductsFromSearchLog");
+});

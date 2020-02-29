@@ -66,7 +66,7 @@ class Product extends Model implements HasMedia
 
         return $file;
     }
-    
+
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -117,5 +117,25 @@ class Product extends Model implements HasMedia
         $ids = $ids ? implode(",",$ids) : null;
         $this->township_ids = $ids;
         $this->save();
+    }
+
+    public static function getProducts($params){
+        return self::with("categories","tags")->where(function ($query) use($params){
+                if(isset($params["name"]) && !empty($params["name"])){
+                    $query->orWhere("name","LIKE","%".$params['name']."%");
+                    $query->orWhere("description","LIKE","%".$params['name']."%");
+                }
+                if(isset($params["division"]) && !empty($params["division"])){
+                    $query->whereRaw("FIND_IN_SET('".$params["division"]."', division_ids)");
+                }
+                if(isset($params["city"]) && !empty($params["city"])){
+                    $query->whereRaw("FIND_IN_SET('".$params["city"]."', city_ids)");
+                }
+                if(isset($params["township"]) && !empty($params["township"])){
+                    $query->whereRaw("FIND_IN_SET('".$params["township"]."', township_ids)");
+                }
+            })
+            ->orderBy("created_at","DESC")
+            ->get();
     }
 }
